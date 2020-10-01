@@ -1,0 +1,17 @@
+{
+  "name": "hacker-rank-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "diagonal-difference.js",
+  "dependencies": {
+    "jest": "^26.4.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
