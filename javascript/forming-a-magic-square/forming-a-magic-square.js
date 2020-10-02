@@ -1,5 +1,6 @@
 function formingMagicSquare(s) {
-  return s; 
+  return s;
+  
 }
 
 function convertToMagicSquare(numbers) {

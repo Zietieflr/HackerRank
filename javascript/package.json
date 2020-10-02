@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "diagonal-difference.js",
-  "dependencies": {
-    "jest": "^26.4.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^26.0.14"
+    "@types/jest": "^26.0.14",
+    "jest": "^26.4.2"
   },
   "scripts": {
     "test": "jest"
