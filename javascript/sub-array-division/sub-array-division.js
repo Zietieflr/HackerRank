@@ -1,17 +1,32 @@
-// array has 1 <= elements <= 100
-// integer for day of month 1 <= day <= 31
-// integer for month of year 1 <= month <= 12
-//   receive all as arguments 
+function birthday(integers, day, month) {
+  if (validateEnoughSquares(integers, month)) {
+    let count = 0;
+    let subArraySum = initializeSubArraySum(integers, month);
+    for (let i = month - 1; i < integers.length; i++) {
+      if (subArraySum === day) {
+        count++;
+      }
+      subArraySum -= integers[(i+1) - month];
+      subArraySum += integers[i+1];
+    }
+    return count;
+  } else {
+    return 0;
+  }
+}
 
-// number of elements used === month
-// sum of elements === day
-// maintain array element order
-// return the number of times elements can be used in this way.
+function validateEnoughSquares(integers, month) {
+  return integers.length >= month;
+}
 
-function birthdays(integers, day, month) {
-  return "hello";
+function initializeSubArraySum(integers, month) {
+  let sum = 0;
+  for (let i = 0; i < month; i++) {
+    sum += integers[i];
+  }
+  return sum;
 }
 
 module.exports = {
-  birthdays, 
+  birthday, validateEnoughSquares, initializeSubArraySum
 }
