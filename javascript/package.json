@@ -5,7 +5,7 @@
   "main": "diagonal-difference.js",
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^26.0.15",
     "jest": "^26.4.2"
   },
   "scripts": {
