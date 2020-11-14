@@ -19,6 +19,18 @@ describe("Given a list of people assigned a number for their place in line, "
       process.stdout.write = jest.fn(value => value);
       expect(minimumBribes(received)).toBe(expected);
     });
+    test("Given 3, 2, 4, 1; return 4.", () => {
+      const received = [3, 2, 4, 1];
+      const expected = "4\n";
+      process.stdout.write = jest.fn(value => value);
+      expect(minimumBribes(received)).toBe(expected);
+    });
+    test("Given 3, 1, 4, 2, 7, 6, 5; return 6.", () => {
+      const received = [3, 1, 4, 2, 7, 6, 5];
+      const expected = "6\n";
+      process.stdout.write = jest.fn(value => value);
+      expect(minimumBribes(received)).toBe(expected);
+    });
     test("Given 2, 3, 4, 5, 6, 7, 8, 9, 10, 1; return 9.", () => {
       const received = [2, 3, 4, 5, 6, 7, 8, 9, 10, 1];
       const expected = "9\n";
@@ -56,7 +68,7 @@ describe("Given a list of people assigned a number for their place in line, "
       expect(minimumBribes(received)).toBe(expected);
     });
     test("Given 3, 4, 5, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, "
-      +"15, 16, 17, 18, 2; return 7.",
+      +"15, 16, 17, 18, 2; return 19.",
     () => {
       const received = [3, 4, 5, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 2];
       const expected = "19\n";
@@ -68,6 +80,12 @@ describe("Given a list of people assigned a number for their place in line, "
     () => {
       const received = [1, 3, 2];
       const expected = "1\n";
+      process.stdout.write = jest.fn(value => value);
+      expect(minimumBribes(received)).toBe(expected);
+    });
+    test("Given 3, 4, 5, 6, 1, 7, 8, 10, 11, 9, 12, 14, 15, 16, 13, 18, 17, 19, 2, 20; return 27.", () => {
+      const received = [3, 4, 5, 6, 1, 7, 8, 10, 11, 9, 12, 14, 15, 16, 13, 18, 17, 19, 2, 20];
+      const expected = "27\n";
       process.stdout.write = jest.fn(value => value);
       expect(minimumBribes(received)).toBe(expected);
     });
