@@ -1,32 +1,34 @@
 function minimumBribes(queue) {
-  let bribes = 0;
+  let bribeCount = 0;
+  let previousBribe = 0;
+  let bribedInts = [];
   for (let i=0; i<queue.length; i++) {
-    // const possibleBribes = queue[i] - (i+1);
-    // const hiddenBribes = queue[i] - queue[i+1];
-    // if (possibleBribes > 2) {
-    //   return process.stdout.write("Too chaotic\n");
-    // } else if (possibleBribes > 0) {
-    //   bribes += possibleBribes;
-    // } else if (hiddenBribes > 0) {
-    //   bribes++;
-    // }
-
-    // if (possibleBribes > 2) {
-    //   return process.stdout.write("Too chaotic\n");
-    // } else if (possibleBribes > 0) {
-    //   bribes += possibleBribes;
-    // } else if (possibleBribes === 0 && queue[i] < queue[i-1]) {
-    //   bribes++;
-    // }
-
-    const possibleBribes = queue[i] - (i+1);
-    if (possibleBribes > 2) {
+    const currentBribe = queue[i] - (i+1);
+    if (currentBribe > 2) {
       return process.stdout.write("Too chaotic\n");
-    } else if (possibleBribes < 0) {
-      bribes += Math.abs(possibleBribes);
+    } else if (currentBribe > previousBribe) {
+      for (let i2=1;i2<=(currentBribe-previousBribe); i2++) {
+        bribedInts.push(queue[i]-i2);
+      }
+      previousBribe = currentBribe;
+    } else if (currentBribe < 0) {
+      bribeCount += Math.abs(currentBribe);
+      bribedInts = bribedInts.filter(bribedInt => bribedInt !== queue[i]);
+      if (bribedInts.length > 0 && queue[i] > bribedInts[0]) {
+        bribeCount++;
+      }
+      previousBribe = bribedInts.length;
+    } else if (currentBribe === 0 && bribedInts.find(bribedInt => bribedInt === queue[i])) {
+      bribedInts = bribedInts.filter(bribedInt => bribedInt !== queue[i])
+      if (bribedInts.length > 0 && queue[i] > bribedInts[0]) {
+        bribeCount++;
+      }
+    } else {
+      previousBribe = currentBribe;
     }
+    if (bribedInts.length > 2) {return process.stdout.write(`bribedInts to big @ ${i}: ${bribedInts}; previousBribe: ${previousBribe}, currentBribe:${currentBribe}`)}
   };
-  return process.stdout.write(bribes.toString() + "\n");
+  return process.stdout.write(bribeCount.toString() + "\n");
 }
 
 module.exports = {
