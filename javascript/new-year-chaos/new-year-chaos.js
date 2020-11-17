@@ -18,7 +18,9 @@ function minimumBribes(queue) {
         bribeCount++;
       }
       previousBribe = bribedInts.length;
-    } else if (currentBribe === 0 && bribedInts.find(bribedInt => bribedInt === queue[i])) {
+    } else if (currentBribe === 0 
+        && bribedInts.find(bribedInt => bribedInt === queue[i]))
+    {
       bribedInts = bribedInts.filter(bribedInt => bribedInt !== queue[i])
       if (bribedInts.length > 0 && queue[i] > bribedInts[0]) {
         bribeCount++;
