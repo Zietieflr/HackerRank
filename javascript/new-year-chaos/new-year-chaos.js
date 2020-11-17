@@ -23,10 +23,10 @@ function minimumBribes(queue) {
       if (bribedInts.length > 0 && queue[i] > bribedInts[0]) {
         bribeCount++;
       }
+      previousBribe = bribedInts.length;
     } else {
       previousBribe = currentBribe;
     }
-    if (bribedInts.length > 2) {return process.stdout.write(`bribedInts to big @ ${i}: ${bribedInts}; previousBribe: ${previousBribe}, currentBribe:${currentBribe}`)}
   };
   return process.stdout.write(bribeCount.toString() + "\n");
 }
