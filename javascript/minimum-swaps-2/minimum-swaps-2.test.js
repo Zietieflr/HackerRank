@@ -19,6 +19,11 @@ describe("Given array of jumbled integers, find the minimum number of swaps "
       const expected = 3;
       expect(minimumSwaps(received)).toBe(expected);
     });
+    test("Given 4, 1, 2, 3; return 3.", () => {
+      const received = [4, 1, 2, 3];
+      const expected = 3;
+      expect(minimumSwaps(received)).toBe(expected);
+    });
     test("Given 2, 3, 4, 1, 5; return 3.", () => {
       const received = [2, 3, 4, 1, 5];
       const expected = 3;
