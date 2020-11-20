@@ -4,9 +4,9 @@ function minimumSwaps(integers) {
   while (i<integers.length) {
     if (integers[i] !== i+1) {
       while (integers[i] !== i+1) {
-        // trade integers[i] to where integers[i] === i+1
-        // put the traded value at i in integers
-          // this will repeat until integers[i] === i+1
+        let integerToSwap = integers[integers[i]-1];
+        integers.splice(integers[i]-1, 1, integers[i]);
+        integers.splice(i, 1, integerToSwap);
         trades++;
       }
     }
