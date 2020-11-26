@@ -1,19 +1,27 @@
 function checkMagazine(magazineWords, noteWords) {
-  // Given the two lists determine if all strings from noteWords exist in magazineWords
-    // Must be exact match
-    // Return "Yes" or "No" if all exist or not
-    // Ensure duplicates in noteWords are duplicated in magazineWords
-  // Convert to object to not need to iterate through every time
-    // Add word as key, add count as value
-    // If undefined or 0, does not exist
-  let possible = "No";
-  return process.stdout.write(possible);
-}
+  // O(n + m)
+  let magazineObject = convertListToObject(magazineWords);
+  for (let i=0; i<noteWords.length; i++) {
+    if (!magazineObject[noteWords[i]]) {
+      return process.stdout.write("No");
+    };
+    magazineObject[noteWords[i]]--;
+  };
+  return process.stdout.write("Yes");
+};
 
 function convertListToObject(elements) {
-  return elements;
-}
+  let object = {};
+  elements.forEach(element => {
+    if (!object[element]) {
+      object[element] = 1;
+    } else {
+      object[element]++;
+    };
+  });
+  return object;
+};
 
 module.exports = {
   checkMagazine, convertListToObject
-}
+};
