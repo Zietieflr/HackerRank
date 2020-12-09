@@ -1,16 +1,4 @@
 function sherlockAndAnagrams(string) {
-  // 2 < string.length < 100, relatively small
-  // Brute force by finding all possible substrings
-    // Push all substrings into array
-      // Iterate through each letter and, for each, all other letters after it
-    // Compare all substrings
-      // shift substring array then compare all against that one
-      // Convert one into object, then iterate through other on made object
-      // Check based off length of string before comparing
-      // Recursion
-        // if anagram 1, else 0
-        // return count + checkForAnagram(array)
-        // if array.length is 0, then return 0
   if (checkForDuplicateLetters(string)) {
     const allSubstrings = listSubstrings(string);
     return countAnagrams(allSubstrings);
