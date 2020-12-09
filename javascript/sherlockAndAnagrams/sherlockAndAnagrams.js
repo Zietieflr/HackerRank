@@ -1,74 +1,79 @@
 function sherlockAndAnagrams(string) {
   // 2 < string.length < 100, relatively small
-  // Count letters and store indexes, if 2+ store letter to compare
-  // From two matching letter indexes
-    // add a letter to an object going toward the other index
-      // therefore have two objects
-      // compare all object VALUES at each iteration
-        // ^^ pivotal step for this idea to work
-      // if both objects are equal based off values anagramsCount++
-    // iterate for all letters that match (including if there are 3+ copies of a letter)
-  // return anagramsCount
-  
-  let anagramsCount = 0;
-  const [ letterIndexes, repeatedLetters ] = lettersIndex(string);
-  if (repeatedLetters.length === 0) {return 0};
-  for (let letter of repeatedLetters) {
-    const indexList = letterIndexes[letter];
-    for (let i=0; i<indexList.length; i++) {
-      for (let i2=i+1; i2<indexList.length; i2++) {
-        const upLetters = {};
-        const downLetters = {};
-        const upIndex = indexList[i];
-        const downIndex = indexList[i2];
-        for (let i3=0; i3<downIndex-upIndex; i3++) {
-          const upLetter = string.charAt(upIndex+i3);
-          const downLetter = string.charAt(downIndex-i3);
-          if (!upLetters[upLetter]) {
-            upLetters[upLetter] = 1;
-          } else {
-            upLetters[upLetter]++;
-          }
-          if (!downLetters[downLetter]) {
-            downLetters[downLetter] = 1;
-          } else {
-            downLetters[downLetter]++;
-          }
-          if (isShallowObjectEqual(upLetters, downLetters)) {
-            anagramsCount++;
-          }
-        }
-      };
+  // Brute force by finding all possible substrings
+    // Push all substrings into array
+      // Iterate through each letter and, for each, all other letters after it
+    // Compare all substrings
+      // shift substring array then compare all against that one
+      // Convert one into object, then iterate through other on made object
+      // Check based off length of string before comparing
+      // Recursion
+        // if anagram 1, else 0
+        // return count + checkForAnagram(array)
+        // if array.length is 0, then return 0
+  if (checkForDuplicateLetters(string)) {
+    const allSubstrings = listSubstrings(string);
+    return countAnagrams(allSubstrings);
+  } else {
+    return 0;
+  }
+}
+
+function listSubstrings(string) {
+  const substrings = [];
+  for (let i=0; i<string.length; i++) {
+    for (let i2=i+1; i2<=string.length; i2++) {
+      substrings.push(string.slice(i, i2));
     };
   };
-  return anagramsCount;
+  return substrings;
 }
 
-function lettersIndex(string) {
-  const letterIndexes = {};
-  const repeatedLetters = [];
-  for (let i=0; i<string.length; i++) {
-    let letter = string.charAt(i);
-    if (!letterIndexes[letter]) {
-      letterIndexes[letter] = [i];
+function countAnagrams(substrings) {
+  if (substrings.length === 0) {return 0};
+  const substring1 = substrings.shift();
+  const count = substrings.reduce((count, substring2) => {
+    return count + checkForAnagram(substring1, substring2);
+  }, 0);
+  return count + countAnagrams(substrings);
+}
+
+function checkForAnagram(string1, string2) {
+  if (string1.length !== string2.length) {return 0};
+  const string1Object = {};
+  for (let i=0; i<string1.length; i++) {
+    if (string1Object[string1.charAt(i)]) {
+      string1Object[string1.charAt(i)]++;
     } else {
-      letterIndexes[letter].push(i);
+      string1Object[string1.charAt(i)] = 1;
     };
-    if (letterIndexes[letter].length === 2) {repeatedLetters.push(letter)};
+  };
+  for (let i=0; i<string2.length; i++) {
+    if (string1Object[string2.charAt(i)]) {
+      string1Object[string2.charAt(i)]--;
+    } else {
+      return 0;
+    }
   }
-  return [letterIndexes, repeatedLetters];
+  return 1;
 }
 
-function isShallowObjectEqual(object1, object2) {
-  const firstKeys = Object.keys(object1); 
-  const secondKeys = Object.keys(object2);
-  if (firstKeys.length !== secondKeys.length) {return false};
-  for (let key of firstKeys) {
-    if(object1[key] !== object2[key]) {return false};
-  }
-  return true;
+function checkForDuplicateLetters(string) {
+  const stringObject = {};
+  for (let i=0; i<string.length; i++) {
+    if (stringObject[string.charAt(i)]) {
+      return true;
+    } else {
+      stringObject[string.charAt(i)] = 1;
+    };
+  };
+  return false;
 }
 
 module.exports = {
-  sherlockAndAnagrams, lettersIndex, isShallowObjectEqual
+  sherlockAndAnagrams,
+  listSubstrings,
+  countAnagrams,
+  checkForAnagram,
+  checkForDuplicateLetters
 }

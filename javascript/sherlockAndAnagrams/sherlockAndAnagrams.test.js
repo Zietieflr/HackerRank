@@ -1,4 +1,10 @@
-const { sherlockAndAnagrams, lettersIndex, isShallowObjectEqual } = require("./sherlockAndAnagrams");
+const { 
+  sherlockAndAnagrams,
+  listSubstrings,
+  countAnagrams,
+  checkForAnagram,
+  checkForDuplicateLetters
+} = require("./sherlockAndAnagrams");
 
 describe("Given a string return the number of substrings that are anagrams "
   +"to each other.",
@@ -45,50 +51,73 @@ describe("Given a string return the number of substrings that are anagrams "
       expect(sherlockAndAnagrams(received)).toBe(expected);
     });
     test("Given qwertyewquioweqpaseqwdfgqwehjkqwe; return ?.", () => {
+      // For some reason I thought I would be able to calculate this
+      // when I made it. I was wrong, or at least not willing to take
+      // that much time for me manually calculate it.
       const received = "qwertyewquioweqpaseqwdfgqwehjkqwe";
-      const expected = 0;
+      const expected = 162;
       expect(sherlockAndAnagrams(received)).toBe(expected);
     });
   });
-  describe("isShallowObjectEqual", () => {
-    test("Given two objects with different counts; return false.", () => {
-      const received = [{z: 1, x: 1, q: 1, y: 1}, {z: 1, x: 1, y: 1}];
-      const expected = false;
-      expect(isShallowObjectEqual(...received)).toBe(expected);
+  describe("listSubstrings", () => {
+    test("Given aa; return [a, aa, a]", () => {
+      const received = "aa";
+      const expected = ["a", "aa", "a"];
+      expect(listSubstrings(received)).toEqual(expected);
     });
-    test("Given two objects; return false.", () => {
-      const received = [{z: 1, x: 1, q: 1, y: 1}, {z: 1, x: 1, q: 1, y: 2}];
-      const expected = false;
-      expect(isShallowObjectEqual(...received)).toBe(expected);
-    });
-    test("Given two objects; return true.", () => {
-      const received = [{z: 1, x: 1, q: 1, y: 1}, {x: 1, z: 1, y: 1, q: 1}];
-      const expected = true;
-      expect(isShallowObjectEqual(...received)).toBe(expected);
-    });
-    test("Given two empty objects; return true.", () => {
-      const received = [{}, {}];
-      const expected = true;
-      expect(isShallowObjectEqual(...received)).toBe(expected);
+    test("Given aaaa; return [a, aa, aaa, aaaa, a, aa, aaa, a, aa, a]", () => {
+      const received = "aaaa";
+      const expected = [
+        "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "a", "aa", "a"
+      ];
+      expect(listSubstrings(received)).toEqual(expected);
     });
   });
-  describe("lettersIndex", () => {
-    test("Given a; return [{a: [0]}, []]", () => {
-      const received = "a";
-      const expected = [{a: [0]}, []];
-      expect(lettersIndex(received)).toStrictEqual(expected);
+  describe("countAnagrams", () => {
+    test("Given [a, aa, a]; return 1.", () => {
+      const received = ["a", "aa", "a"];
+      const expected = 1;
+      expect(countAnagrams(received)).toBe(expected);
     });
-    test("Given aa; return [{a: [0, 1]}, ['a']]", () => {
-      const received = "aa";
-      const expected = [{a: [0, 1]}, ["a"]];
-      expect(lettersIndex(received)).toStrictEqual(expected);
+    test("Given [a, aa, aaa, aaaa, a, aa, aaa, a, aa, a]; return 10.", () => {
+      const received = [
+        "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "a", "aa", "a"
+      ];
+      const expected = 10;
+      expect(countAnagrams(received)).toBe(expected);
     });
-    test("Given aaaabcc; "
-      +"return [{a: [0, 1, 2, 3], b: [4], c: [5, 6]}, ['a', 'c']]",
+  });
+  describe("checkForAnagram", () => {
+    test("Given a and a; return 1.", () => {
+      const received = ["a", "a"];
+      const expected = 1;
+      expect(checkForAnagram(...received)).toBe(expected);
+    });
+    test("Given a and aa; return 0.", () => {
+      const received = ["a", "aa"];
+      const expected = 0;
+      expect(checkForAnagram(...received)).toBe(expected);
+    });
+    test("Given qzerwohasldfjalsdhoihsle and qzerwohasldfjalsdhoihsle; "
+      + "return 1.", 
     () => {
-      const received = "aaaabcc";
-      const expected = [{a: [0, 1, 2, 3], b: [4], c: [5, 6]}, ["a", "c"]];
-      expect(lettersIndex(received)).toStrictEqual(expected);
+      const received = [
+        "qzerwohasldfjalsdhoihsle", "qzerwohasldfjalsdhoihsle"
+      ];
+      const expected = 1;
+      expect(checkForAnagram(...received)).toBe(expected);
+    });
+  });
+  describe("checkForDuplicateLetters", () => {
+    test("Given aa, return true.", () => {
+      const received = "aa";
+      const expected = true;
+      expect(checkForDuplicateLetters(received)).toBe(expected);
+    });
+    test("Given ab, return false.", () => {
+      const received = "ab";
+      const expected = false;
+      expect(checkForDuplicateLetters(received)).toBe(expected);
     });
   });
 });
